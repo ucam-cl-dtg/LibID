@@ -1,0 +1,456 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>LibID modules &mdash; LibID  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Licenses" href="../license/index.html" />
+    <link rel="prev" title="LibID API" href="main.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> LibID
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="main.html">LibID API</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">LibID modules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-module.analyzer">LibID.module.analyzer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-module.profiler">LibID.module.profiler</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../license/index.html">Licenses</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">LibID</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>LibID modules</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/api/module.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="libid-modules">
+<h1>LibID modules<a class="headerlink" href="#libid-modules" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-module.analyzer">
+<span id="libid-module-analyzer"></span><h2>LibID.module.analyzer<a class="headerlink" href="#module-module.analyzer" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="module.analyzer.LibAnalyzer">
+<em class="property">class </em><code class="descclassname">module.analyzer.</code><code class="descname">LibAnalyzer</code><span class="sig-paren">(</span><em>file_path</em><span class="sig-paren">)</span><a class="headerlink" href="#module.analyzer.LibAnalyzer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<dl class="method">
+<dt id="module.analyzer.LibAnalyzer.get_class_descriptor">
+<code class="descname">get_class_descriptor</code><span class="sig-paren">(</span><em>encoded_class</em><span class="sig-paren">)</span><a class="headerlink" href="#module.analyzer.LibAnalyzer.get_class_descriptor" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="module.analyzer.LibAnalyzer.get_class_signature">
+<code class="descname">get_class_signature</code><span class="sig-paren">(</span><em>encoded_class</em><span class="sig-paren">)</span><a class="headerlink" href="#module.analyzer.LibAnalyzer.get_class_signature" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the signature of an encoded class</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>encoded_class</strong> (<em>dvm.ClassDefItem</em>) – The encoded class parsed by Androidguard.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The list of class signatures.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)">list</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="module.analyzer.LibAnalyzer.get_classes">
+<code class="descname">get_classes</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#module.analyzer.LibAnalyzer.get_classes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="module.analyzer.LibAnalyzer.get_classes_signatures">
+<code class="descname">get_classes_signatures</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#module.analyzer.LibAnalyzer.get_classes_signatures" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="module.analyzer.LibAnalyzer.get_classes_signatures_json_info">
+<code class="descname">get_classes_signatures_json_info</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#module.analyzer.LibAnalyzer.get_classes_signatures_json_info" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="module.analyzer.LibAnalyzer.get_formatted_method_descriptor">
+<code class="descname">get_formatted_method_descriptor</code><span class="sig-paren">(</span><em>encoded_method</em>, <em>class_descriptor</em>, <em>method_descriptor=None</em><span class="sig-paren">)</span><a class="headerlink" href="#module.analyzer.LibAnalyzer.get_formatted_method_descriptor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Replace all obfuscatable names with X</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>encoded_method</strong> (<em>dvm.EncodedMethod</em>) – The encoded method parsed by Androidguard.</li>
+<li><strong>class_descriptor</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – The class descriptor.</li>
+<li><strong>method_descriptor</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a><em>, </em><em>optional</em>) – Defaults to None. The method descriptor.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Formatted method descriptor.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)">str</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="module.analyzer.LibAnalyzer.get_formatted_xref">
+<code class="descname">get_formatted_xref</code><span class="sig-paren">(</span><em>xref</em><span class="sig-paren">)</span><a class="headerlink" href="#module.analyzer.LibAnalyzer.get_formatted_xref" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="module.analyzer.LibAnalyzer.get_lib_classes_signatures_json_info">
+<code class="descname">get_lib_classes_signatures_json_info</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#module.analyzer.LibAnalyzer.get_lib_classes_signatures_json_info" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="module.analyzer.LibAnalyzer.get_libraries">
+<code class="descname">get_libraries</code><span class="sig-paren">(</span><em>lsh</em>, <em>mode=&lt;MODE.ACCURATE: 2&gt;</em>, <em>repackage=False</em>, <em>LIB_RELATIONSHIP_GRAPHS=None</em>, <em>exclude_builtin=True</em><span class="sig-paren">)</span><a class="headerlink" href="#module.analyzer.LibAnalyzer.get_libraries" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all third party libraries used in this app.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>lsh</strong> (<em>MinHashLSH</em>) – Indexed Locality Sensitive Hashing (LSH) object.</li>
+<li><strong>mode</strong> (<em>&lt;enum 'MODE'&gt;</em><em>, </em><em>optional</em>) – Defaults to MODE.ACCURATE. The detection mode. Either MODE.ACCURATE or MODE.SCALABLE.</li>
+<li><strong>repackage</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a><em>, </em><em>optional</em>) – Defaults to False. Should LibID consider classes repackaging?</li>
+<li><strong>LIB_RELATIONSHIP_GRAPHS</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)"><em>dict</em></a><em>, </em><em>optional</em>) – Defaults to None. A dictionary of the library relation graphs. LIB_RELATIONSHIP_GRAPHS[lib_name] = (call_graph, interface_graph, inheritance graph).</li>
+<li><strong>exclude_builtin</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a><em>, </em><em>optional</em>) – Defaults to True. Should LibID exclude builtin Android libraries?</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Library matches.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)">dict</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="module.analyzer.LibAnalyzer.get_matched_libs_json_info">
+<code class="descname">get_matched_libs_json_info</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#module.analyzer.LibAnalyzer.get_matched_libs_json_info" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="module.analyzer.LibAnalyzer.get_method_signature">
+<code class="descname">get_method_signature</code><span class="sig-paren">(</span><em>encoded_method</em>, <em>class_descriptor</em>, <em>dex_idx</em><span class="sig-paren">)</span><a class="headerlink" href="#module.analyzer.LibAnalyzer.get_method_signature" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get signature of an encoded method</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>encoded_method</strong> (<em>dvm.EncodedMethod</em>) – The encoded method parsed by Androidguard.</li>
+<li><strong>class_descriptor</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – The class descriptor.</li>
+<li><strong>dex_idx</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – The index of the dex file. Some apps contain multiple dex files.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The list of method signatures.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)">list</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="module.analyzer.LibAnalyzer.get_package_classes">
+<code class="descname">get_package_classes</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#module.analyzer.LibAnalyzer.get_package_classes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="module.analyzer.LibAnalyzer.get_package_matches">
+<code class="descname">get_package_matches</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#module.analyzer.LibAnalyzer.get_package_matches" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="module.analyzer.LibAnalyzer.get_packages">
+<code class="descname">get_packages</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#module.analyzer.LibAnalyzer.get_packages" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="module.analyzer.LibAnalyzer.get_relationship_graphs">
+<code class="descname">get_relationship_graphs</code><span class="sig-paren">(</span><em>repackage=False</em><span class="sig-paren">)</span><a class="headerlink" href="#module.analyzer.LibAnalyzer.get_relationship_graphs" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Get the call_graph, interface_graph and superclass_graph</dt>
+<dd>repackage (bool, optional): Defaults to False. Should LibID consider classes repackaging?</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">invocation, interface, and inheritance graph</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)">list</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-module.profiler">
+<span id="libid-module-profiler"></span><h2>LibID.module.profiler<a class="headerlink" href="#module-module.profiler" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="module.profiler.parallel_load_libs_profile">
+<code class="descclassname">module.profiler.</code><code class="descname">parallel_load_libs_profile</code><span class="sig-paren">(</span><em>lib_profiles</em>, <em>mode=&lt;MODE.ACCURATE: 2&gt;</em>, <em>repackage=False</em>, <em>processes=1</em><span class="sig-paren">)</span><a class="headerlink" href="#module.profiler.parallel_load_libs_profile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loading library profiles as a MinHash list and relation graphs.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>lib_profiles</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a>) – The list of library profiles.</li>
+<li><strong>mode</strong> (<em>&lt;enum 'MODE'&gt;</em><em>, </em><em>optional</em>) – Defaults to MODE.ACCURATE. The detection mode. Either MODE.ACCURATE or MODE.SCALABLE. See the paper for more details.</li>
+<li><strong>repackage</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a><em>, </em><em>optional</em>) – Defaults to False. Should LibID consider classes repackaging? This should only be enabled if already know classes repackaging is applied.</li>
+<li><strong>processes</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a><em>, </em><em>optional</em>) – Defaults to 1. The number of processes to use.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">(the minhash list, the relation graph dictionary)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.7)">tuple</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="module.profiler.parallel_profiling_binaries">
+<code class="descclassname">module.profiler.</code><code class="descname">parallel_profiling_binaries</code><span class="sig-paren">(</span><em>paths</em>, <em>output_folder</em>, <em>profile_type</em>, <em>processes=1</em>, <em>overwrite=False</em><span class="sig-paren">)</span><a class="headerlink" href="#module.profiler.parallel_profiling_binaries" title="Permalink to this definition">¶</a></dt>
+<dd><p>Profiling Android app/library binaries to JSON files.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>paths</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a>) – The list of binaries.</li>
+<li><strong>output_folder</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – The folder to store profiles.</li>
+<li><strong>profile_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Either ‘app’ or ‘lib’.</li>
+<li><strong>processes</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a><em>, </em><em>optional</em>) – Defaults to 1. The number of processes to use.</li>
+<li><strong>overwrite</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a><em>, </em><em>optional</em>) – Defaults to False. Should LibID overwrite the binary profile if it exists?</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="module.profiler.write_to_json">
+<code class="descclassname">module.profiler.</code><code class="descname">write_to_json</code><span class="sig-paren">(</span><em>file_path</em>, <em>obj</em><span class="sig-paren">)</span><a class="headerlink" href="#module.profiler.write_to_json" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../license/index.html" class="btn btn-neutral float-right" title="Licenses" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="main.html" class="btn btn-neutral" title="LibID API" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Stan Zhang
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../',
+              VERSION:'',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

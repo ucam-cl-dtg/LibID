@@ -1,0 +1,17 @@
+/apks/*
+/libraries/*
+/profiles/*
+/database/*
+/outputs/*
+/statistics/*
+/data/log/*
+/example/*
+.vscode
+*.pdf
+*.pyc
+*.log
+.DS_Store
+*.pkl
+/module/*.txt
+
+!/example/init.sh

@@ -52,13 +52,13 @@ def _export_result_to_json(analyzer, output_path, start_time):
 # ----------------------------------------------
 
 
-def load_LSH(lib_profiles, mode=MODE.ACCURATE, repackage=False,
+def load_LSH(lib_profiles, mode=MODE.SCALABLE, repackage=False,
              processes=None):
     """Load library profiles to an LSH object.
     
     Args:
         lib_profiles (list): The list of library profiles.
-        mode (<enum 'MODE'>, optional): Defaults to MODE.ACCURATE. The detection mode. Either MODE.ACCURATE or MODE.SCALABLE. See the paper for more details.
+        mode (<enum 'MODE'>, optional): Defaults to MODE.SCALABLE. The detection mode. Either MODE.ACCURATE or MODE.SCALABLE. See the paper for more details.
         repackage (bool, optional): Defaults to False. Should LibID consider classes repackaging? This should only be enabled if already know classes repackaging is applied. 
         processes (int, optional): Defaults to None. The number of processes to use. If processes is None then the number returned by cpu_count() is used.
     """
@@ -209,7 +209,7 @@ def search_libs_in_apps(lib_folder=None,
                         lib_profiles=None,
                         app_folder=None,
                         app_profiles=None,
-                        mode=MODE.ACCURATE,
+                        mode=MODE.SCALABLE,
                         overwrite=False,
                         output_folder='outputs',
                         repackage=False,
@@ -226,7 +226,7 @@ def search_libs_in_apps(lib_folder=None,
         lib_profiles (list, optional): Defaults to None. The list of library profiles.
         app_folder (str, optional): Defaults to None. The folder that contains app binaries.
         app_profiles (list, optional): Defaults to None. The list of app profiles.
-        mode (<enum 'MODE'>, optional): Defaults to MODE.ACCURATE. The detection mode. Either MODE.ACCURATE or MODE.SCALABLE. See the paper for more details.
+        mode (<enum 'MODE'>, optional): Defaults to MODE.SCALABLE. The detection mode. Either MODE.ACCURATE or MODE.SCALABLE. See the paper for more details.
         overwrite (bool, optional): Defaults to False. Should LibID overwrite the output file if it exists?
         output_folder (str, optional): Defaults to 'outputs'. The folder to store results.
         repackage (bool, optional): Defaults to False. Should LibID consider classes repackaging? This should only be enabled if already know classes repackaging is applied. 
@@ -347,8 +347,8 @@ def parse_arguments():
         'the number of processes to use [default: the number of CPUs in the system]'
     )
     parser_detection.add_argument(
-        '-s',
-        help='run program in Lib-S mode [default: LibID-A mode]',
+        '-A',
+        help='run program in Lib-A mode [default: LibID-S mode]',
         action='store_true')
     parser_detection.add_argument(
         '-r', help='consider classes repackaging', action='store_true')
@@ -404,7 +404,7 @@ if __name__ == '__main__':
             lib_profiles=args.lf,
             app_folder=args.ad,
             app_profiles=args.af,
-            mode=MODE.SCALABLE if args.s else MODE.ACCURATE,
+            mode=MODE.ACCURATE if args.A else MODE.SCALABLE,
             overwrite=args.w,
             output_folder=args.o,
             repackage=args.r,

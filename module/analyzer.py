@@ -538,6 +538,7 @@ class LibAnalyzer(object):
                                     "/") - app_class.count("/") == ghost_lib_class.count("/") - lib_class.count("/"))
                             
                             if info["type"] == 0:
+                                # Call graph
                                 for ghost_app_class in ghost_app_classes:
                                     app_call_descriptors = set(
                                         m[:2] for m in graphs[0][app_class][ghost_app_class]["method"])
@@ -547,7 +548,8 @@ class LibAnalyzer(object):
                                         LOGGER.debug("Ghost app class found: [%d] %s, %s, %s, %s", 0, lib_class, app_class, ghost_lib_class, ghost_app_class)
                                         USG.remove_node(ghost_app_class)
                             else:
-                                LOGGER.debug("Ghost app class found: [%d] %s, %s, %s, %s", info["type"], lib_class, app_class, ghost_lib_class, ghost_app_class)
+                                # Inheritance/Interface graph
+                                LOGGER.debug("Ghost app classes found: [%d] %s, %s, %s, %s", info["type"], lib_class, app_class, ghost_lib_class, ghost_app_classes)
                                 USG.remove_nodes_from(ghost_app_classes)
 
             LOGGER.debug("After removing ghost: %d", len(USG.nodes()))
@@ -854,12 +856,12 @@ class LibAnalyzer(object):
     # LibID core methods (API)
     # ---------------------------------------------------------
 
-    def get_libraries(self, lsh, mode=MODE.ACCURATE, repackage=False, LIB_RELATIONSHIP_GRAPHS=None, exclude_builtin=True):
+    def get_libraries(self, lsh, mode=MODE.SCALABLE, repackage=False, LIB_RELATIONSHIP_GRAPHS=None, exclude_builtin=True):
         """Get all third party libraries used in this app.
         
         Args:
             lsh (MinHashLSH): Indexed Locality Sensitive Hashing (LSH) object.
-            mode (<enum 'MODE'>, optional): Defaults to MODE.ACCURATE. The detection mode. Either MODE.ACCURATE or MODE.SCALABLE.
+            mode (<enum 'MODE'>, optional): Defaults to MODE.SCALABLE. The detection mode. Either MODE.ACCURATE or MODE.SCALABLE.
             repackage (bool, optional): Defaults to False. Should LibID consider classes repackaging?
             LIB_RELATIONSHIP_GRAPHS (dict, optional): Defaults to None. A dictionary of the library relation graphs. LIB_RELATIONSHIP_GRAPHS[lib_name] = (call_graph, interface_graph, inheritance graph).
             exclude_builtin (bool, optional): Defaults to True. Should LibID exclude builtin Android libraries?

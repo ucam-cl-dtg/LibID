@@ -137,14 +137,14 @@ def _load_lib_profile(profile_path_n_mode_n_repackage):
 
 
 def parallel_load_libs_profile(lib_profiles,
-                               mode=MODE.ACCURATE,
+                               mode=MODE.SCALABLE,
                                repackage=False,
                                processes=1):
     """Loading library profiles as a MinHash list and relation graphs.
     
     Args:
         lib_profiles (list): The list of library profiles.
-        mode (<enum 'MODE'>, optional): Defaults to MODE.ACCURATE. The detection mode. Either MODE.ACCURATE or MODE.SCALABLE. See the paper for more details.
+        mode (<enum 'MODE'>, optional): Defaults to MODE.SCALABLE. The detection mode. Either MODE.ACCURATE or MODE.SCALABLE. See the paper for more details.
         repackage (bool, optional): Defaults to False. Should LibID consider classes repackaging? This should only be enabled if already know classes repackaging is applied. 
         processes (int, optional): Defaults to 1. The number of processes to use.
     

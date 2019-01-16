@@ -14,7 +14,7 @@ from os import makedirs, path
 from datasketch import LeanMinHash, MinHash
 
 from module.analyzer import LibAnalyzer
-from module.config import LOGGER, LSH_PERM_NUM, MODE
+from module.config import LOGGER, LSH_PERM_NUM, MODE, SHRINK_MINIMUM_NUMBER
 
 
 # Helper methods
@@ -106,7 +106,7 @@ def _load_lib_profile(profile_path_n_mode_n_repackage):
     minhash_list = []
     relationship_graphs = None
 
-    if len(analyzer.classes_names) > 4:
+    if len(analyzer.classes_names) >= SHRINK_MINIMUM_NUMBER:
         if mode == MODE.ACCURATE:
             relationship_graphs = analyzer.get_relationship_graphs(repackage)
 

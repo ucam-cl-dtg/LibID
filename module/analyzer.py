@@ -77,7 +77,7 @@ class LibAnalyzer(object):
         self.mode = None
         self.consider_classes_repackaging = True
         self.shrink_threshold = None
-        self.probability_threshold = None
+        self.similarity_threshold = None
 
     # Initialization related methods
     # ---------------------------------------------------------
@@ -549,8 +549,9 @@ class LibAnalyzer(object):
                                         USG.remove_node(ghost_app_class)
                             else:
                                 # Inheritance/Interface graph
-                                LOGGER.debug("Ghost app classes found: [%d] %s, %s, %s, %s", info["type"], lib_class, app_class, ghost_lib_class, ghost_app_classes)
-                                USG.remove_nodes_from(ghost_app_classes)
+                                if ghost_app_classes:
+                                    LOGGER.debug("Ghost app classes found: [%d] %s, %s, %s, %s", info["type"], lib_class, app_class, ghost_lib_class, ghost_app_classes)
+                                    USG.remove_nodes_from(ghost_app_classes)
 
             LOGGER.debug("After removing ghost: %d", len(USG.nodes()))
             
@@ -579,7 +580,7 @@ class LibAnalyzer(object):
         else:
             return matched_app_classes, package_classes
 
-    def _get_lib_match_probability(self, matched_classes_pairs, lib_name, lib_class_num, lib_signature_num):
+    def _get_lib_match_similarity(self, matched_classes_pairs, lib_name, lib_class_num, lib_signature_num):
 
         LOGGER.debug("matched_app_classes: %d",
                           len(matched_classes_pairs))
@@ -602,16 +603,16 @@ class LibAnalyzer(object):
 
         divide_classes_num = min(len(package_classes), lib_class_num)
 
-        probability = len(matched_app_classes) / \
+        similarity = len(matched_app_classes) / \
             float(divide_classes_num) if divide_classes_num else 0
         self._lib_shrink_percentage[lib_name] = self._get_shrink_percentage(
             package_classes, lib_signature_num)
 
-        LOGGER.debug("matching info: %s -> %s: %d, %d, %d, %f", self.filename, lib_name, len(matched_app_classes), lib_class_num, len(package_classes), probability)
+        LOGGER.debug("matching info: %s -> %s: %d, %d, %d, %f", self.filename, lib_name, len(matched_app_classes), lib_class_num, len(package_classes), similarity)
         FILE_LOGGER.debug("%s -> %s: %d, %d, %d, %f", self.filename, lib_name, len(
-            matched_app_classes), lib_class_num, len(package_classes), probability)
+            matched_app_classes), lib_class_num, len(package_classes), similarity)
 
-        return probability
+        return similarity
 
     def _check_package_has_subpackage(self, package):
         if package and any(cn.count("/") - package.count("/") > 1 for cn in self._package_classes[package]):
@@ -619,8 +620,8 @@ class LibAnalyzer(object):
 
         return False
 
-    def _bind_lib_to_package(self, lib_name, probability, package):
-        self._libs_matches[lib_name] = probability
+    def _bind_lib_to_package(self, lib_name, similarity, package):
+        self._libs_matches[lib_name] = similarity
 
         if lib_name in self._lib_packages_matches:
             self._lib_packages_matches[lib_name].add(package)
@@ -633,12 +634,12 @@ class LibAnalyzer(object):
             self._package_libs_matches[package] = [lib_name]
 
     def _check_package_lib_match(self, lib_name, package, matched_classes_pairs, lib_class_num, lib_signature_num):
-        probability = self._get_lib_match_probability(
+        similarity = self._get_lib_match_similarity(
             matched_classes_pairs, lib_name, lib_class_num, lib_signature_num)
 
-        LOGGER.debug("probability: %s : %f", lib_name, probability)
+        LOGGER.debug("similarity: %s : %f", lib_name, similarity)
 
-        if probability > self.probability_threshold:
+        if similarity > self.similarity_threshold:
             lib_name_base = lib_name.split("_")[0] + "_"
 
             # If there are libraries already matched to the package
@@ -647,10 +648,10 @@ class LibAnalyzer(object):
                     lib for lib in self._package_libs_matches[package] if lib.startswith(lib_name_base)]
                 # If libraries with the same name have matched to the package
                 if existed_lib:
-                    if abs(probability - self._libs_matches[existed_lib[0]]) < 0.0001:
+                    if abs(similarity - self._libs_matches[existed_lib[0]]) < 0.0001:
                         self._bind_lib_to_package(
-                            lib_name, probability, package)
-                    elif probability > self._libs_matches[existed_lib[0]]:
+                            lib_name, similarity, package)
+                    elif similarity > self._libs_matches[existed_lib[0]]:
                         for lib in existed_lib:
                             del self._libs_matches[lib]
                             for _package in self._lib_packages_matches[lib]:
@@ -659,12 +660,12 @@ class LibAnalyzer(object):
                             del self._lib_packages_matches[lib]
 
                         self._bind_lib_to_package(
-                            lib_name, probability, package)
+                            lib_name, similarity, package)
 
                 else:
-                    self._bind_lib_to_package(lib_name, probability, package)
+                    self._bind_lib_to_package(lib_name, similarity, package)
             else:
-                self._bind_lib_to_package(lib_name, probability, package)
+                self._bind_lib_to_package(lib_name, similarity, package)
 
             return True
 
@@ -774,7 +775,7 @@ class LibAnalyzer(object):
 
         return superclass_dict
 
-    def _match_relationship_graph_for_lib(self, lib, lib_name, lib_class_num):
+    def _match_relationship_graph_for_lib(self, lib, lib_name, lib_class_num, assume_flattened_package=False):
         LOGGER.debug("lib_name: %s", lib_name)
 
         lib_class_names = set(self._pmatch_lib_classes[lib])
@@ -798,7 +799,7 @@ class LibAnalyzer(object):
 
         LOGGER.debug("potential matches: %d, lib calls: %d, method_calls: %d", len(
             potential_class_matches), len(lib_method_calls), len(app_method_calls))
-
+        
         return match(lib_classnames=lib_class_names,
                      app_classnames=app_class_names,
                      potential_class_matches=potential_class_matches,
@@ -810,8 +811,35 @@ class LibAnalyzer(object):
                      lib_class_interfaces=lib_interfaces,
                      app_class_interfaces=app_interfaces,
                      use_pkg_hierarchy=not self.consider_classes_repackaging,
-                     assume_flattened_package=self.consider_classes_repackaging,
+                     assume_flattened_package=assume_flattened_package,
                      flattened_app_pkgs_allowed=childless_packages)
+    
+    def _check_if_library_match(self, lib, lib_name, class_num, signature_num, assume_flattened_package=False):
+        start_time = time.time()
+        weight, matched_classes_pairs = self._match_relationship_graph_for_lib(
+            lib, lib_name, int(class_num), assume_flattened_package)
+        end_time = time.time()
+
+        LOGGER.debug("graph matching time: %fs",
+                            end_time - start_time)
+
+        matched_app_classes = set(pair[1]
+                                    for pair in matched_classes_pairs)
+
+        shrink_percentage = self._get_shrink_percentage(
+            matched_app_classes, signature_num)
+
+        LOGGER.debug("matched weight: %f", weight)
+        LOGGER.debug("shrink percentage: %f", shrink_percentage)
+        LOGGER.debug("matched classes pairs: %s", matched_classes_pairs)
+
+        if shrink_percentage > self.shrink_threshold:
+            matched_root_package = self._get_root_package(
+                matched_app_classes)
+            return self._check_package_lib_match(
+                lib_name, matched_root_package, matched_classes_pairs, int(class_num), int(signature_num))
+        else:
+            return False
 
     def _match_libraries(self):
         self._get_possible_matches()
@@ -824,29 +852,12 @@ class LibAnalyzer(object):
                 signature_num, category, _] = lib.split("|")
             self._lib_info[lib_name] = [root_package, category]
 
-            start_time = time.time()
-            weight, matched_classes_pairs = self._match_relationship_graph_for_lib(
-                lib, lib_name, int(class_num))
-            end_time = time.time()
-
-            LOGGER.debug("graph matching time: %fs",
-                              end_time - start_time)
-
-            matched_app_classes = set(pair[1]
-                                      for pair in matched_classes_pairs)
-
-            shrink_percentage = self._get_shrink_percentage(
-                matched_app_classes, signature_num)
-
-            LOGGER.debug("matched weight: %f", weight)
-            LOGGER.debug("shrink percentage: %f", shrink_percentage)
-            LOGGER.debug("matched classes pairs: %s", matched_classes_pairs)
-
-            if shrink_percentage > self.shrink_threshold:
-                matched_root_package = self._get_root_package(
-                    matched_app_classes)
-                self._check_package_lib_match(
-                    lib_name, matched_root_package, matched_classes_pairs, int(class_num), int(signature_num))
+            is_match = self._check_if_library_match(lib, lib_name, class_num, signature_num)
+            
+            if not is_match and self.consider_classes_repackaging:
+                LOGGER.debug("Try matching considering class repackaging")
+                LOGGER.debug("---------------------------------------------------")
+                self._check_if_library_match(lib, lib_name, class_num, signature_num, True)
 
         library_matching_end = time.time()
 
@@ -874,7 +885,7 @@ class LibAnalyzer(object):
         self.mode = mode
         self.consider_classes_repackaging = repackage
         self.shrink_threshold = config.SHRINK_THRESHOLD_ACCURATE if mode == MODE.ACCURATE else config.SHRINK_THRESHOLD_SCALABLE
-        self.probability_threshold = config.PROBABILITY_THRESHOLD_ACCURATE if mode == MODE.ACCURATE else config.PROBABILITY_THRESHOLD_SCALABLE
+        self.similarity_threshold = config.PROBABILITY_THRESHOLD_ACCURATE if mode == MODE.ACCURATE else config.PROBABILITY_THRESHOLD_SCALABLE
 
         if not self._package_classes:
             self._build_packages_info()

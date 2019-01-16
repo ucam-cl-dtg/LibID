@@ -1,4 +1,5 @@
 import itertools
+from os.path import basename
 from collections import namedtuple
 
 from gurobipy import GRB, LinExpr, Model, and_
@@ -215,6 +216,7 @@ def match(lib_classnames, app_classnames, potential_class_matches, lib_method_ca
 
     app_parents_and_interf_matched_expr = LinExpr(0)
 
+    # Superclass matching
     if lib_class_parents:
         for pcm in potential_class_matches:
             (lib_class, app_class) = pcm
@@ -224,8 +226,9 @@ def match(lib_classnames, app_classnames, potential_class_matches, lib_method_ca
                 if parent_app:
                     parents_match = (parent_lib, parent_app)
                     if parents_match in class_match_vars.keys():
-                        m.addConstr(
-                            class_match_vars[pcm] <= class_match_vars[parents_match])
+                        if not assume_flattened_package or (basename(lib_class) == basename(parent_lib) and basename(app_class) == basename(parent_app)):
+                            m.addConstr(
+                                class_match_vars[pcm] <= class_match_vars[parents_match])
                     else:
                         m.addConstr(class_match_vars[pcm] == 0)
                 else:
@@ -233,32 +236,7 @@ def match(lib_classnames, app_classnames, potential_class_matches, lib_method_ca
             else:
                 if parent_app:
                     m.addConstr(1 - class_match_vars[pcm] >= app_class_match_count_exprs[parent_app])
-
-            # Interface matching
-
-            if lib_class_interfaces:
-                interfaces_lib_class = lib_class_interfaces[lib_class] if lib_class in lib_class_interfaces else []
-                interfaces_app_class = app_class_interfaces[app_class] if app_class in app_class_interfaces else []
-
-                matched_interfaces_expr = LinExpr(0)
-                for lib_interface in interfaces_lib_class:
-                    for app_interface in interfaces_app_class:
-                        interfaces_match = (lib_interface, app_interface)
-                        if interfaces_match in class_match_vars:
-                            matched_interfaces_expr += class_match_vars[interfaces_match]
-
-                matched_lib_interfaces_expr = LinExpr(0)
-                matched_app_interfaces_expr = LinExpr(0)
-                for lib_interface in interfaces_lib_class:
-                    if lib_interface in lib_class_match_count_exprs:
-                        matched_lib_interfaces_expr += lib_class_match_count_exprs[lib_interface]
-                for app_interface in interfaces_app_class:
-                    if app_interface in app_class_match_count_exprs:
-                        matched_app_interfaces_expr += app_class_match_count_exprs[app_interface]
-
-                m.addConstr(2 * matched_interfaces_expr ==
-                            matched_app_interfaces_expr + matched_lib_interfaces_expr)
-
+        
         for app_class, app_class_parent in app_class_parents.iteritems():
             if app_class in app_class_used_vars and app_class_parent in app_class_used_vars:
                 app_class_and_parent_matched = m.addVar(vtype=GRB.BINARY)
@@ -266,14 +244,40 @@ def match(lib_classnames, app_classnames, potential_class_matches, lib_method_ca
                 m.addConstr(app_class_used_vars[app_class_parent] >= app_class_and_parent_matched)
                 app_parents_and_interf_matched_expr += app_class_and_parent_matched
 
-        if app_class_interfaces:
-            for app_class, app_class_interfaces in app_class_interfaces.iteritems():
-                for interface in app_class_interfaces:
-                    if app_class in app_class_used_vars and interface in app_class_used_vars:
-                        app_class_and_interface_matched = m.addVar(vtype=GRB.BINARY)
-                        m.addConstr(app_class_used_vars[app_class] >= app_class_and_interface_matched)
-                        m.addConstr(app_class_used_vars[interface] >= app_class_and_interface_matched)
-                        app_parents_and_interf_matched_expr += app_class_and_interface_matched
+    # Interface matching
+    if lib_class_interfaces:
+        for pcm in potential_class_matches:
+            (lib_class, app_class) = pcm
+            interfaces_lib_class = lib_class_interfaces[lib_class] if lib_class in lib_class_interfaces else []
+            interfaces_app_class = app_class_interfaces[app_class] if app_class in app_class_interfaces else []
+
+            matched_interfaces_expr = LinExpr(0)
+            for lib_interface in interfaces_lib_class:
+                for app_interface in interfaces_app_class:
+                    interfaces_match = (lib_interface, app_interface)
+                    if interfaces_match in class_match_vars:
+                        if not assume_flattened_package or (basename(lib_class) == basename(lib_interface) and basename(app_class) == basename(app_interface)):
+                            matched_interfaces_expr += class_match_vars[interfaces_match]
+
+            matched_lib_interfaces_expr = LinExpr(0)
+            matched_app_interfaces_expr = LinExpr(0)
+            for lib_interface in interfaces_lib_class:
+                if lib_interface in lib_class_match_count_exprs:
+                    matched_lib_interfaces_expr += lib_class_match_count_exprs[lib_interface]
+            for app_interface in interfaces_app_class:
+                if app_interface in app_class_match_count_exprs:
+                    matched_app_interfaces_expr += app_class_match_count_exprs[app_interface]
+
+            m.addConstr(2 * matched_interfaces_expr ==
+                        matched_app_interfaces_expr + matched_lib_interfaces_expr)
+
+        for app_class, app_class_interfaces in app_class_interfaces.iteritems():
+            for interface in app_class_interfaces:
+                if app_class in app_class_used_vars and interface in app_class_used_vars:
+                    app_class_and_interface_matched = m.addVar(vtype=GRB.BINARY)
+                    m.addConstr(app_class_used_vars[app_class] >= app_class_and_interface_matched)
+                    m.addConstr(app_class_used_vars[interface] >= app_class_and_interface_matched)
+                    app_parents_and_interf_matched_expr += app_class_and_interface_matched
 
     objective_expr = LinExpr(0)
 
@@ -297,7 +301,7 @@ def match(lib_classnames, app_classnames, potential_class_matches, lib_method_ca
             matched_app_classes.add(pcm[1])
 
     LOGGER.debug('Done')
-    LOGGER.debug('Class matches:')
+    LOGGER.debug('Class matches: %s', class_matches)
 
     # If the log level is DEBUG
     if LOGGER.getEffectiveLevel() == 10:
@@ -359,7 +363,7 @@ def match(lib_classnames, app_classnames, potential_class_matches, lib_method_ca
         LOGGER.debug('Active packages:')
         if assume_flattened_package:
             for pkg in flattened_app_pkgs_allowed:
-                LOGGER.debug(pkg, app_pkg_active_vars[pkg].x)
+                LOGGER.debug('%s: %s', pkg, app_pkg_active_vars[pkg].x)
 
         LOGGER.debug('Objective value: %0.4f', m.objval)
 

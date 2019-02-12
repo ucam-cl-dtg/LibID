@@ -123,7 +123,7 @@ $ ./LibID.py detect -ad profiles/app -ld profiles/lib
 ```
 
 The result is stored under the `outputs` folder as a .json file:
-```json
+```
 $ python -m json.tool outputs/com.example.root.analyticaltranslator_6.json
 {
     "appID": "com.example.root.analyticaltranslator",

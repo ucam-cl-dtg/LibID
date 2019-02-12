@@ -184,7 +184,7 @@
 <p>To use LibID, users must first use the <cite>profile</cite> subcommand to generate app and library profiles from their binaries. Then, users can use the <cite>detect</cite> subcommand to detect if a library is used in an app.</p>
 <div class="section" id="library-profiling">
 <h2>Library Profiling<a class="headerlink" href="#library-profiling" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-none"><div class="highlight"><pre><span></span>./LibID.py profile -h
+<div class="highlight-none"><div class="highlight"><pre><span></span>$ ./LibID.py profile -h
 usage: LibID.py profile [-h] [-o FOLDER] [-w] [-p N] [-v]
                         (-f FILE [FILE ...] | -d FOLDER)
 
@@ -199,22 +199,22 @@ optional arguments:
 </pre></div>
 </div>
 <p>Profiling Android apps (*.apk):</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>./LibID.py profile -f app1.apk app2.apk ...
+<div class="highlight-none"><div class="highlight"><pre><span></span>$ ./LibID.py profile -f app1.apk app2.apk ...
 </pre></div>
 </div>
 <p>Profiling thrid-party Android libraries (*.jar | *.dex):</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>./LibID.py profile -f lib1.jar lib2.jar ...
+<div class="highlight-none"><div class="highlight"><pre><span></span>$ ./LibID.py profile -f lib1.jar lib2.jar ...
 </pre></div>
 </div>
 <p>Profiling all related files (*.apk | *.jar | *.dex) inside a directory:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>./LibID.py profile -d apps
+<div class="highlight-none"><div class="highlight"><pre><span></span>$ ./LibID.py profile -d apps
 </pre></div>
 </div>
 <p>The generated profiles will be stored as .json files.</p>
 </div>
 <div class="section" id="library-detection">
 <h2>Library Detection<a class="headerlink" href="#library-detection" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-none"><div class="highlight"><pre><span></span>./LibID.py detect -h
+<div class="highlight-none"><div class="highlight"><pre><span></span>$ ./LibID.py detect -h
 usage: LibID.py detect [-h] [-o FOLDER] [-w] [-b] [-p N] [-s] [-r] [-v]
                     (-af FILE [FILE ...] | -ad FOLDER)
                     (-lf FILE [FILE ...] | -ld FOLDER)
@@ -235,11 +235,11 @@ optional arguments:
 </pre></div>
 </div>
 <p>Detect if specified apps use specified libraries:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>./LibID.py detect -af app1.json app2.json -lf lib1.json lib2.json lib3.json
+<div class="highlight-none"><div class="highlight"><pre><span></span>$ ./LibID.py detect -af app1.json app2.json -lf lib1.json lib2.json lib3.json
 </pre></div>
 </div>
 <p>Detect if apps in directory use libraries in a directory:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>./LibID.py detect -ad profiles/app -ld profiles/lib
+<div class="highlight-none"><div class="highlight"><pre><span></span>$ ./LibID.py detect -ad profiles/app -ld profiles/lib
 </pre></div>
 </div>
 </div>
@@ -261,41 +261,42 @@ optional arguments:
 <div class="section" id="example">
 <h1>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h1>
 <p>Run the <cite>example/init.sh</cite> script to download the demo app and library binaries from FDroid and Maven.</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="nb">cd</span> example<span class="p">;</span> ./init.sh
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ ./example/init.sh
 </pre></div>
 </div>
 <p>Run the following command to profile the binaries:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>./LibID.py profile -d example
+<div class="highlight-none"><div class="highlight"><pre><span></span>$ ./LibID.py profile -d example
 </pre></div>
 </div>
 <p>Run the following command to detect the correct version of OkHttp library used in the app:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>./LibID.py detect -ad profiles/app -ld profiles/lib
+<div class="highlight-none"><div class="highlight"><pre><span></span>$ ./LibID.py detect -ad profiles/app -ld profiles/lib
 </pre></div>
 </div>
 <p>The result is stored under the <cite>outputs</cite> folder as a .json file:</p>
-<div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">{</span>
-    <span class="nt">&quot;filename&quot;</span><span class="p">:</span> <span class="s2">&quot;com.example.root.analyticaltranslator_6.apk&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;appID&quot;</span><span class="p">:</span> <span class="s2">&quot;com.example.root.analyticaltranslator&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;permissions&quot;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="s2">&quot;android.permission.INTERNET&quot;</span>
-    <span class="p">],</span>
-    <span class="nt">&quot;libraries&quot;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="p">{</span>
-            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;okhttp&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;version&quot;</span><span class="p">:</span> <span class="p">[</span>
-                <span class="s2">&quot;2.3.0&quot;</span>
-            <span class="p">],</span>
-            <span class="nt">&quot;category&quot;</span><span class="p">:</span> <span class="s2">&quot;example&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;root_package_exist&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
-            <span class="nt">&quot;similarity&quot;</span><span class="p">:</span> <span class="mf">0.9716312056737588</span><span class="p">,</span>
-            <span class="nt">&quot;matched_root_package&quot;</span><span class="p">:</span> <span class="p">[</span>
-                <span class="s2">&quot;Lcom/squareup/okhttp&quot;</span>
-            <span class="p">],</span>
-            <span class="nt">&quot;shrink_percentage&quot;</span><span class="p">:</span> <span class="mi">1</span>
-        <span class="p">}</span>
-    <span class="p">],</span>
-    <span class="nt">&quot;time&quot;</span><span class="p">:</span> <span class="mf">34.33088493347168</span>
-<span class="p">}</span>
+<div class="highlight-json"><div class="highlight"><pre><span></span>$ python -m json.tool outputs/com.example.root.analyticaltranslator_6.json
+{
+    &quot;appID&quot;: &quot;com.example.root.analyticaltranslator&quot;,
+    &quot;filename&quot;: &quot;com.example.root.analyticaltranslator_6.apk&quot;,
+    &quot;libraries&quot;: [
+        {
+            &quot;category&quot;: &quot;example&quot;,
+            &quot;matched_root_package&quot;: [
+                &quot;Lcom/squareup/okhttp&quot;
+            ],
+            &quot;name&quot;: &quot;okhttp&quot;,
+            &quot;root_package_exist&quot;: true,
+            &quot;shrink_percentage&quot;: 1.0,
+            &quot;similarity&quot;: 1.0,
+            &quot;version&quot;: [
+                &quot;2.3.0&quot;
+            ]
+        }
+    ],
+    &quot;permissions&quot;: [
+        &quot;android.permission.INTERNET&quot;
+    ],
+    &quot;time&quot;: 3.760045051574707
+}
 </pre></div>
 </div>
 </div>

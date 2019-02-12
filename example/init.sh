@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Set current directory as working directory
+cd "${0%/*}"
+
 # Download the app binary from FDroid
 wget -nc "https://f-droid.org/repo/com.example.root.analyticaltranslator_6.apk"
 

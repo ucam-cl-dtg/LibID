@@ -307,7 +307,7 @@ def parse_arguments():
         '-p',
         metavar='N',
         type=int,
-        default=1,
+        default=None,
         help='the number of processes to use [default: the number of CPUs in the system]')
     parser_profiling.add_argument(
         '-v', help='show debug information', action='store_true')

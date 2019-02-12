@@ -31,7 +31,7 @@ Library Profiling
 
 .. code-block:: none
 
-    ./LibID.py profile -h
+    $ ./LibID.py profile -h
     usage: LibID.py profile [-h] [-o FOLDER] [-w] [-p N] [-v]
                             (-f FILE [FILE ...] | -d FOLDER)
 
@@ -48,20 +48,20 @@ Profiling Android apps (\*.apk):
 
 .. code-block:: none
 
-    ./LibID.py profile -f app1.apk app2.apk ...
+    $ ./LibID.py profile -f app1.apk app2.apk ...
 
 Profiling thrid-party Android libraries (\*.jar | \*.dex):
 
 .. code-block:: none
 
-    ./LibID.py profile -f lib1.jar lib2.jar ...
+    $ ./LibID.py profile -f lib1.jar lib2.jar ...
 
 
 Profiling all related files (\*.apk | \*.jar | \*.dex) inside a directory:
 
 .. code-block:: none
 
-    ./LibID.py profile -d apps
+    $ ./LibID.py profile -d apps
 
 The generated profiles will be stored as .json files.
 
@@ -71,7 +71,7 @@ Library Detection
 
 .. code-block:: none
 
-    ./LibID.py detect -h
+    $ ./LibID.py detect -h
     usage: LibID.py detect [-h] [-o FOLDER] [-w] [-b] [-p N] [-s] [-r] [-v]
                         (-af FILE [FILE ...] | -ad FOLDER)
                         (-lf FILE [FILE ...] | -ld FOLDER)
@@ -94,13 +94,13 @@ Detect if specified apps use specified libraries:
 
 .. code-block:: none
 
-    ./LibID.py detect -af app1.json app2.json -lf lib1.json lib2.json lib3.json
+    $ ./LibID.py detect -af app1.json app2.json -lf lib1.json lib2.json lib3.json
 
 Detect if apps in directory use libraries in a directory:
 
 .. code-block:: none
 
-    ./LibID.py detect -ad profiles/app -ld profiles/lib
+    $ ./LibID.py detect -ad profiles/app -ld profiles/lib
 
 
 Parameter Tuning
@@ -127,49 +127,50 @@ Run the `example/init.sh` script to download the demo app and library binaries f
 
 .. code-block:: bash
 
-    cd example; ./init.sh
+    $ ./example/init.sh
 
 
 Run the following command to profile the binaries:
 
 .. code-block:: none
 
-    ./LibID.py profile -d example
+    $ ./LibID.py profile -d example
 
 
 Run the following command to detect the correct version of OkHttp library used in the app:
 
 .. code-block:: none
 
-    ./LibID.py detect -ad profiles/app -ld profiles/lib
+    $ ./LibID.py detect -ad profiles/app -ld profiles/lib
 
 
 The result is stored under the `outputs` folder as a .json file:
 
 .. code-block:: json
 
+    $ python -m json.tool outputs/com.example.root.analyticaltranslator_6.json
     {
-        "filename": "com.example.root.analyticaltranslator_6.apk",
         "appID": "com.example.root.analyticaltranslator",
-        "permissions": [
-            "android.permission.INTERNET"
-        ],
+        "filename": "com.example.root.analyticaltranslator_6.apk",
         "libraries": [
             {
-                "name": "okhttp",
-                "version": [
-                    "2.3.0"
-                ],
                 "category": "example",
-                "root_package_exist": true,
-                "similarity": 0.9716312056737588,
                 "matched_root_package": [
                     "Lcom/squareup/okhttp"
                 ],
-                "shrink_percentage": 1
+                "name": "okhttp",
+                "root_package_exist": true,
+                "shrink_percentage": 1.0,
+                "similarity": 1.0,
+                "version": [
+                    "2.3.0"
+                ]
             }
         ],
-        "time": 34.33088493347168
+        "permissions": [
+            "android.permission.INTERNET"
+        ],
+        "time": 3.760045051574707
     }
 
 

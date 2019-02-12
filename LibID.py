@@ -4,7 +4,7 @@
 # @Author: Stan Zhang
 # @Contact: jz448@cl.cam.ac.uk
 # @Last Modified By: Stan Zhang
-# @Last Modified Time: Nov 7, 2018 2:14 PM
+# @Last Modified Time: Feb 12, 2019 3:32 PM
 # @Description: LibID
 
 import argparse
@@ -92,7 +92,10 @@ def load_LSH(lib_profiles, mode=MODE.SCALABLE, repackage=False,
 # ----------------------------------------------
 
 
-def _profile_apps(apk_files, output_folder=None, processes=1, overwrite=False):
+def _profile_apps(apk_files,
+                  output_folder=None,
+                  processes=None,
+                  overwrite=False):
     if apk_files:
         profiler.parallel_profiling_binaries(
             apk_files,
@@ -252,7 +255,7 @@ def search_libs_in_apps(lib_folder=None,
         ignored_profile_num = original_profile_num - len(app_profiles)
         if ignored_profile_num:
             LOGGER.warning(
-                "Ignored %i app profiles because the output file already exist. Use -w to overwrite",
+                "Ignored %i app profiles because the output files already exist. Use -w to overwrite",
                 ignored_profile_num)
 
     if app_profiles and lib_profiles:
@@ -305,7 +308,7 @@ def parse_arguments():
         metavar='N',
         type=int,
         default=1,
-        help='the number of processes to use [default: 1]')
+        help='the number of processes to use [default: the number of CPUs in the system]')
     parser_profiling.add_argument(
         '-v', help='show debug information', action='store_true')
 

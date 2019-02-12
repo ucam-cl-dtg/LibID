@@ -39,7 +39,7 @@ Library Profiling
     -h, --help          show this help message and exit
     -o FOLDER           specify output folder
     -w                  overwrite the output file if it exists
-    -p N                the number of processes to use [default: 1]
+    -p N                the number of processes to use [default: the number of CPUs in the system]
     -v                  show debug information
     -f FILE [FILE ...]  the app/library binaries
     -d FOLDER           the folder that contains app/library binaries
@@ -81,8 +81,8 @@ Library Detection
     -o FOLDER            specify output folder
     -w                   overwrite the output file if it exists
     -b                   considering build-in Android libraries
-    -p N                 the number of processes to use [default: 1]
-    -s                   run program in Lib-S mode [default: LibID-A mode]
+    -p N                 the number of processes to use [default: the number of CPUs in the system]
+    -A                   run program in Lib-A mode [default: LibID-S mode]
     -r                   consider classes repackaging
     -v                   show debug information
     -af FILE [FILE ...]  the app profiles

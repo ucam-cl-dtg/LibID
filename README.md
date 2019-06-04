@@ -159,7 +159,7 @@ The license information of dependencies can be found on the documentation.
 
 ## Licenses
 
-Copyright (C) 2018, Stan J. Zhang (jz448@cl.cam.ac.uk) and Stephan A. Kollmann.
+Copyright (C) 2018, Stan J. Zhang (jz448--LibID@cl.cam.ac.uk) and Stephan A. Kollmann.
 All rights reserved.
 
 Licensed under the Apache License, Version 2.0 (the "License");

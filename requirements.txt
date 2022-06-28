@@ -26,7 +26,7 @@ networkx == 1.11
 # datasketch/lshensemble.py: 2,215
 # datasketch/minhash.py: 3
 # datasketch/weighted_minhash.py: 3
-numpy == 1.13.3
+numpy == 1.22.0
 
 # datasketch/lsh.py: 15
 scipy == 0.19.1
